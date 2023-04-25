@@ -65,8 +65,10 @@ public class PersonalData {
             System.out.println("Incorrect number of data entries. Please enter all required data in the correct order.");
         } catch (IOException e) {
             System.out.println("An error occurred while writing to file. Please try again later.");
+            e.printStackTrace();
         } catch (Exception e) {
             System.out.println("An unexpected error occurred. Please try again later.");
+            e.printStackTrace();
         }
     }
 
