@@ -1,6 +1,5 @@
 package homeworks.homework3;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -43,7 +42,8 @@ public class PersonalData {
         try {
             LocalDate birthDate = parseDateOfBirth(dateOfBirth);
             if (birthDate == null) {
-                System.out.println("Invalid date of birth. Please enter a valid date in the format " + PersonalDataUtils.DATE_FORMAT);
+                System.out.println("Invalid date of birth. Please enter a valid date in the format "
+                        + PersonalDataUtils.DATE_FORMAT);
                 return;
             }
 
@@ -70,7 +70,9 @@ public class PersonalData {
         }
     }
 
-    private static void writeDataToFile(String lastName, String firstName, String middleName, String dateOfBirth, String phoneNumber, String gender) throws IOException {
+    private static void writeDataToFile(String lastName, String firstName, String middleName,
+                                        String dateOfBirth, String phoneNumber,
+                                        String gender) throws IOException {
         String fileName = lastName + ".txt";
         File file = new File(fileName);
         boolean fileExists = file.exists();
@@ -78,7 +80,9 @@ public class PersonalData {
         if (fileExists) {
             writer.append(System.lineSeparator());
         }
-        writer.write(lastName + " " + firstName + " " + middleName + " " + dateOfBirth + " " + phoneNumber + " " + gender);
+        writer.write(lastName + " " + firstName + " "
+                + middleName + " " + dateOfBirth + " "
+                + phoneNumber + " " + gender);
         writer.close();
         System.out.println("Data saved to file " + fileName);
     }
