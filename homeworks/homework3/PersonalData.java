@@ -40,6 +40,10 @@ public class PersonalData {
         String gender = userData[5];
 
         try {
+            if (!phoneNumber.matches("\\d+")) {
+                throw new NumberFormatException();
+            }
+
             LocalDate birthDate = parseDateOfBirth(dateOfBirth);
             if (birthDate == null) {
                 System.out.println("Invalid date of birth. Please enter a valid date in the format " + PersonalDataUtils.DATE_FORMAT);
@@ -57,7 +61,7 @@ public class PersonalData {
             writer.close();
             System.out.println("Data saved to file " + lastName + ".txt");
         } catch (NumberFormatException e) {
-            System.out.println("Invalid phone number format. Please enter an unsigned integer without formatting.");
+            System.out.println("Invalid phone number format. Please enter a valid phone number consisting of digits only.");
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Incorrect number of data entries. Please enter all required data in the correct order.");
         } catch (IOException e) {
