@@ -57,10 +57,7 @@ public class PersonalData {
                 return;
             }
 
-            BufferedWriter writer = new BufferedWriter(new FileWriter(lastName + ".txt"));
-            writer.write(lastName + " " + firstName + " " + middleName + " " + dateOfBirth + " " + phoneNumber + " " + gender);
-            writer.close();
-            System.out.println("Data saved to file " + lastName + ".txt");
+            writeDataToFile(lastName, firstName, middleName, dateOfBirth, phoneNumber, gender);
         } catch (NumberFormatException e) {
             System.out.println("Invalid phone number format. Please enter an unsigned integer without formatting.");
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -70,6 +67,13 @@ public class PersonalData {
         } catch (Exception e) {
             System.out.println("An unexpected error occurred. Please try again later.");
         }
+    }
+
+    private static void writeDataToFile(String lastName, String firstName, String middleName, String dateOfBirth, String phoneNumber, String gender) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(lastName + ".txt"));
+        writer.write(lastName + " " + firstName + " " + middleName + " " + dateOfBirth + " " + phoneNumber + " " + gender);
+        writer.close();
+        System.out.println("Data saved to file " + lastName + ".txt");
     }
 
     private static LocalDate parseDateOfBirth(String dateOfBirth) {
