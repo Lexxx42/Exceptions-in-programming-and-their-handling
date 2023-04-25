@@ -3,12 +3,11 @@ package homeworks.homework3;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class PersonalData {
 
@@ -40,14 +39,19 @@ public class PersonalData {
         String phoneNumber = userData[4];
         String gender = userData[5];
 
-        Pattern datePattern = Pattern.compile("([0-9]{2}).([0-9]{2}).([0-9]{4})");
-        Matcher matcher = datePattern.matcher(dateOfBirth);
-        if (!matcher.matches()) {
-            System.out.println("Invalid date format. Please enter date in the format " + PersonalDataUtils.DATE_FORMAT);
-            return;
-        }
-
         try {
+            LocalDate birthDate = parseDateOfBirth(dateOfBirth);
+            if (birthDate == null) {
+                System.out.println("Invalid date of birth. Please enter a valid date in the format " + PersonalDataUtils.DATE_FORMAT);
+                return;
+            }
+
+            int currentYear = LocalDate.now().getYear();
+            if (birthDate.getYear() < 1950 || birthDate.getYear() > currentYear) {
+                System.out.println("Invalid year of birth. Available years of birth are from 1950 to current year.");
+                return;
+            }
+
             BufferedWriter writer = new BufferedWriter(new FileWriter(lastName + ".txt"));
             writer.write(lastName + " " + firstName + " " + middleName + " " + dateOfBirth + " " + phoneNumber + " " + gender);
             writer.close();
@@ -60,6 +64,26 @@ public class PersonalData {
             System.out.println("An error occurred while writing to file. Please try again later.");
         } catch (Exception e) {
             System.out.println("An unexpected error occurred. Please try again later.");
+        }
+    }
+
+    private static LocalDate parseDateOfBirth(String dateOfBirth) {
+        String[] parts = dateOfBirth.split("\\.");
+        if (parts.length != 3) {
+            return null;
+        }
+        int day, month, year;
+        try {
+            day = Integer.parseInt(parts[0]);
+            month = Integer.parseInt(parts[1]);
+            year = Integer.parseInt(parts[2]);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+        try {
+            return LocalDate.of(year, month, day);
+        } catch (Exception e) {
+            return null;
         }
     }
 }
