@@ -1,6 +1,7 @@
 package homeworks.homework3;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -70,10 +71,16 @@ public class PersonalData {
     }
 
     private static void writeDataToFile(String lastName, String firstName, String middleName, String dateOfBirth, String phoneNumber, String gender) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(lastName + ".txt"));
+        String fileName = lastName + ".txt";
+        File file = new File(fileName);
+        boolean fileExists = file.exists();
+        FileWriter writer = new FileWriter(file, true);
+        if (fileExists) {
+            writer.append(System.lineSeparator());
+        }
         writer.write(lastName + " " + firstName + " " + middleName + " " + dateOfBirth + " " + phoneNumber + " " + gender);
         writer.close();
-        System.out.println("Data saved to file " + lastName + ".txt");
+        System.out.println("Data saved to file " + fileName);
     }
 
     private static LocalDate parseDateOfBirth(String dateOfBirth) {
